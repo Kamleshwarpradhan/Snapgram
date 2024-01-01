@@ -171,7 +171,7 @@ export async function updatePost(post: IUpdatePost){
         const tags = post.tags?.replace(/ /g,'').split(",") || []
 
         // save Post to database
-        const updatePost = await databases.updateDocument(
+        const updatedPost = await databases.updateDocument(
              appwriteConfig.databasesId,
              appwriteConfig.postscollectionId,
              post.postId,
@@ -183,11 +183,11 @@ export async function updatePost(post: IUpdatePost){
                 tags: tags
              }
         )
-        if(!updatePost) {
+        if(!updatedPost) {
            await deleteFile(post.imageid);
            throw Error;
         }
-        return updatePost;
+        return updatedPost;
     } catch (error) {
        console.log(error);
     }

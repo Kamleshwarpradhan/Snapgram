@@ -124,15 +124,15 @@ export const useGetPostByID = (postId: string)=>{
 }
 
 export const useUpdatePost = ()=>{
-    const queryClient = useQueryClient();
-    return useMutation({
-       mutationFn: (post: IUpdatePost)=> updatePost(post),
-       onSuccess: (data)=>{
-            queryClient.invalidateQueries({
-               queryKey: [QUERY_KEYS.GET_POST_BY_ID,data?.$id]
-            })
-       }
-    })
+   const queryClient = useQueryClient();
+   return useMutation({
+     mutationFn: (post: IUpdatePost) => updatePost(post),
+     onSuccess: () => {
+       queryClient.invalidateQueries({
+         queryKey: [QUERY_KEYS.GET_POST_BY_ID],
+       });
+     },
+   });
 }
 export const useDeletePost = ()=>{
     const queryClient = useQueryClient();
@@ -174,7 +174,7 @@ export const useGetsearchPost = (searchTerm:string)=>{
 export const useGetAllusers = (limit?: number)=>{
     return useQuery({
        queryKey: [QUERY_KEYS.GET_USERS],
-       queryFn: ()=>getAllusers(limit)
+       queryFn: ()=>getAllusers(limit || 0)
     })
 }
 

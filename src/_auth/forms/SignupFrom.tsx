@@ -21,11 +21,11 @@ import { useNavigate } from "react-router-dom"
 
 const SignupFrom = () => {
   const {toast} = useToast();
-  const {CheckAuthUser,isLoading: isUserLoading} = useUserContext();
+  const {CheckAuthUser} = useUserContext();
   const navigate = useNavigate();
 
   const {mutateAsync: createUserAccount,isLoading:isCreatingAccount} = useCreateUserAccountMutation();
-  const {mutateAsync: signInAccout, isLoading: isSigningIn} = useSignInAccountMutation();
+  const {mutateAsync: signInAccout} = useSignInAccountMutation();
   // 1. Define your form.
   const form = useForm<z.infer<typeof SignupFormValidation>>({
     resolver: zodResolver(SignupFormValidation),
