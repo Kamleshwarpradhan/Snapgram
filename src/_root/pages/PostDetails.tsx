@@ -2,17 +2,20 @@ import { useUserContext } from "@/Context/AuthContext"
 import Loader from "@/components/SharedCompo/Loader"
 import PostStats from "@/components/SharedCompo/PostStats"
 import { Button } from "@/components/ui/button"
-import { useGetPostByID } from "@/lib/react-query/queryAndMutations"
+import { useDeletePost, useGetPostByID } from "@/lib/react-query/queryAndMutations"
 import { formatDateString } from "@/lib/utils"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 const PostDetails = () => {
   const {id} = useParams()
+  const navigate = useNavigate();
   const {data:post , isLoading} = useGetPostByID(id || '')
   const {user} = useUserContext();
+  const {mutate:deletePost} = useDeletePost();
 
-  const handleDeletePost = ()=>{
-
+  const handleDeletePost = async()=>{
+         deletePost({postId: id || "",imageid:post?.imageid});
+         navigate(-1);
   }
 
   return (
