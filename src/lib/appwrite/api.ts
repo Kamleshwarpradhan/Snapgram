@@ -57,6 +57,11 @@ export async function saveUserToDB(user:{
 
 export async function signInAccount(user:{email:string; password:string}){
      try {    
+        const alreadyExistsession = await account.get();
+        if(alreadyExistsession){
+          console.log("User is already logged in logging out...");
+          await account.deleteSession('current');
+        }
         const session = await account.createEmailSession(user.email,user.password);
         return session;
      } catch (error) {
